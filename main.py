@@ -14,7 +14,7 @@ intents.presences = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client=client)
 
-@tree.command(name="test", description="my first command!")
+@tree.command(name="register", description="Register user")
 async def test(inter: discord.Interaction):
     await inter.response.send_message(f"Hello world!")
 
