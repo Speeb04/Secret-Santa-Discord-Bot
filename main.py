@@ -152,6 +152,7 @@ async def participants(inter: discord.Interaction):
 
     await inter.response.send_message(response, silent=True)
 
+    
 @tree.command(name="help", description="See all commands")
 async def help(inter: discord.Interaction):
     response = """
