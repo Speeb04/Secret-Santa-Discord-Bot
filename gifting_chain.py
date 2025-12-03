@@ -151,9 +151,13 @@ class GiftChain:
         # Let's fix that.
         if new_chain.assigned:
             for gifter in new_chain.gifters:
-                send_to_index = input_dict['gifters'][str(gifter.id)]['send_to']
-                receive_from_index = input_dict['gifters'][str(gifter.id)]['receive_from']
-                gifter.assign(new_chain.get_gifter_by_id(send_to_index), new_chain.get_gifter_by_id(receive_from_index))
+                send_to_id = input_dict['gifters'][str(gifter.id)]['send_to']
+                receive_from_id = input_dict['gifters'][str(gifter.id)]['receive_from']
+                send_to_gifter = new_chain.get_gifter_by_id(send_to_id)
+                receive_from_gifter = new_chain.get_gifter_by_id(receive_from_id)
+                assert send_to_gifter is not None
+                assert receive_from_gifter is not None
+                gifter.assign(send_to_gifter, receive_from_gifter)
 
         new_chain.gifters = ordered_gifter_list
 
