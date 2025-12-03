@@ -152,6 +152,32 @@ async def participants(inter: discord.Interaction):
 
     await inter.response.send_message(response, silent=True)
 
+@tree.command(name="help", description="See all commands")
+async def help(inter: discord.Interaction):
+    response = """
+## Commands:\n
+### `/register` `name` `user (opt)` `interests (opt)` `dislikes (opt)`\n
+- **Registers a user for Secret Santa.** If no user is given, it uses the command sender instead.\n
+- Interests and dislikes are optional, but ***highly encouraged***.\n
+
+### `/assign`\n
+- **Assigns all participants someone to send a gift to, and someone to receive a gift from.**\n
+- Note: **This operation is irreversible.** *(Not in theory, but in practice. I'm too lazy to implement it.)*\n
+
+### `/assigned`\n
+- **Allows the user to see who they were assigned to gift for.**\n
+- Note: if the Secret Santas haven't been assigned, it will send a message to let you know.\n
+
+### `/nudge` `message (opt)`\n
+- **Allows the gifter to tell their recipient to give some more details.** Optionally, send a message to them anonymously as well.\n
+- Note: if the Secret Santas haven't been assigned, it will send a message to let you know.\n
+
+### `/participants`\n
+- **Shows all participants in Secret Santa.**\n
+- Yes, it mentions them, but it sends a silent message so no notifications will be sent.\n
+    """
+    await inter.response.send_message(response, ephemeral=True)
+
 
 # DO NOT CHANGE ANY INFORMATION BELOW THIS LINE
 # On ready listener-- Ensuring that the commands are synced up n all
