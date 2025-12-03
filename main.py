@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-import json
 import os
 
 import discord
 from discord import app_commands
+
+from json_wrapper import JSONWrapper
+from gifting_chain import GiftChain
 
 intents = discord.Intents.default()
 intents.members = True
@@ -13,6 +15,16 @@ intents.presences = True
 
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client=client)
+
+# On startup: create GiftChain
+
+file_path = "giftchain.json"
+
+if os.path.isfile(file_path):
+    gifting_chain = JSONWrapper.read_from_file(file_path)
+
+else:
+    gifting_chain = GiftChain()
 
 @tree.command(name="register", description="Register user")
 async def test(inter: discord.Interaction):
