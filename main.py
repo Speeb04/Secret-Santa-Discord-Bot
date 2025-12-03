@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
 import os
@@ -153,9 +152,9 @@ async def participants(inter: discord.Interaction):
 
     await inter.response.send_message(response, silent=True)
 
-
+    
 @tree.command(name="help", description="See all commands")
-async def help_command(inter: discord.Interaction):
+async def help(inter: discord.Interaction):
     response = """
 ## Commands:\n
 ### `/register` `name` `user (opt)` `interests (opt)` `dislikes (opt)`\n
