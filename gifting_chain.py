@@ -147,6 +147,8 @@ class GiftChain:
                 if new_gifter.id == gifter_id:
                     ordered_gifter_list.append(new_gifter)
 
+        new_chain.gifters = ordered_gifter_list
+
         # So far, gifters are unassigned.
         # Let's fix that.
         if new_chain.assigned:
@@ -158,7 +160,5 @@ class GiftChain:
                 assert send_to_gifter is not None
                 assert receive_from_gifter is not None
                 gifter.assign(send_to_gifter, receive_from_gifter)
-
-        new_chain.gifters = ordered_gifter_list
 
         return new_chain
