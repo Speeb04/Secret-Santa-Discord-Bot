@@ -26,7 +26,7 @@ class User:
         """Compares user_id of User"""
         return self.id == other.id
 
-    def introduction(self, name: str, interests: str = "N/A", dislikes: str = "N/A") -> None:
+    def introduction(self, name: str, interests: str = None, dislikes: str = None) -> None:
         """Note: if you have no interests, you are boring as hell."""
         self.name = name
         self.interests = interests
@@ -61,3 +61,15 @@ class User:
             return -1
 
         return previous_send_to, previous_receive_from
+
+    @staticmethod
+    def create_from_dict(user_id: int, input_dict: dict) -> User:
+        """Create a User from a dictionary."""
+        new_user = User(user_id)
+        new_user.name = input_dict['name']
+        new_user.interests = input_dict['interests']
+        new_user.dislikes = input_dict['dislikes']
+        new_user.send_to = input_dict['send_to']
+        new_user.receive_from = input_dict['receive_from']
+
+        return new_user
