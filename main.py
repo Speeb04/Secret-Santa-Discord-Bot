@@ -83,7 +83,8 @@ def create_response(gifter: Gifter) -> str:
 @tree.command(name="assign", description="Randomly shuffles all users, and assigns them one to gift and one to receive.")
 async def assign(inter: discord.Interaction):
     if gifting_chain.assigned:
-        await inter.response.send_message("Woah! The Secret Santas have already been assigned. Re-assigning now would be a very, very bad idea.", ephemeral=True)
+        await inter.response.send_message("Users have been assigned! You should have received a DM informing you of your Secret Santa details.\n\n"
+                                          "Didn't receive a DM? That might be due to your privacy settings, but that's okay. You can use **/assigned** and I'll let you know who you've been assigned.")
         return
 
     gifting_chain.assign()
@@ -93,7 +94,7 @@ async def assign(inter: discord.Interaction):
             discord_user = client.get_user(gifter.id)
             dm_channel = await discord_user.create_dm()
             await dm_channel.send(create_response(gifter))
-        except discord.errors.HTTPException:
+        except:
             pass
     await inter.response.send_message("Users have been assigned! You should have received a DM informing you of your Secret Santa details.\n\n"
                                       "Didn't receive a DM? That might be due to your privacy settings, but that's okay. You can use **/assigned** and I'll let you know who you've been assigned.")
