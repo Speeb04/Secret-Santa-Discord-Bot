@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+from random import shuffle
 
 import discord
 from discord import app_commands
@@ -145,17 +146,19 @@ async def nudge(inter: discord.Interaction, message: str = None):
         await inter.response.send_message("Unfortunately, I was not able to DM them. However, I have made a public announcement so they can get publicly shamed instead!", ephemeral=True)
 
 
-@tree.command(name="participants", description="See all participants.")
+@tree.command(name="participants", description="See all participants. (Note: the list is randomized to prevent showing the order of gift senders")
 async def participants(inter: discord.Interaction):
-    response = "**Here are all of the participants for this Secret Santa:**\n"
-    for gifter in gifting_chain.gifters:
-        response += f"- **{gifter.name}** <@{gifter.id}>\n"
+    response = "## Here are all of the participants for this Secret Santa:\n"
+    shuffled_gifters_list = gifting_chain.gifters[:]
+    shuffle(shuffled_gifters_list)
+    for gifter in shuffled_gifters_list:
+        response += f"- *{gifter.name}* <@{gifter.id}>\n"
 
     await inter.response.send_message(response, silent=True)
 
     
-@tree.command(name="help", description="See all commands")
-async def help(inter: discord.Interaction):
+@tree.command(name="commands", description="See all commands")
+async def commands(inter: discord.Interaction):
     response = """
 ## Commands:\n
 ### `/register` `name` `user (opt)` `interests (opt)` `dislikes (opt)`\n
