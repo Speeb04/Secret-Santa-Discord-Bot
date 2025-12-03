@@ -21,7 +21,7 @@ class GiftChain:
     @override
     def __str__(self) -> str:
         """Hashed output for user output assignment chain"""
-        return ' -> '.join(user.id for user in self.users)
+        return ' -> '.join(str(user.id) for user in self.users)
 
     def user_to_str(self) -> str:
         """same thing as __str__, but uses user's name instead (for humans)"""
@@ -30,11 +30,23 @@ class GiftChain:
     def add_user(self, user: User) -> None | tuple(User, User):
         """Adds a user to the GiftChain.
         If not assigned, will return None.
-        If assigned, will return tuple of all updated Users."""
+        If assigned, will return tuple of all updated Users.
+        """
+
+        # if user is already in GiftChain, overwrite the existing data
+        if user in self.users:
+            modify_user = self.users[self.users.index(user)]
+            if user.interests is not None:
+                modify_user.interests = user.interests
+            if user.dislikes is not None:
+                modify_user.dislikes = user.dislikes
+
+            if modify_user.name != user.name and user.name is not None:
+                modify_user.name = user.name
 
         if not self.assigned:
             self.users.append(user)
-            return
+            return None
 
         # at this point, the user will be added to a random index between
         # (and including) 0 to len(users) - 1
@@ -108,3 +120,22 @@ class GiftChain:
 
         if self.assigned:
             raise Warning("The gift chain has already been assigned before")
+
+    @staticmethod
+    def create_from_dict(input_dict: dict) -> GiftChain:
+        """Creates a new GiftChain from a dictionary."""
+        new_chain = GiftChain()
+        new_user_list = []
+
+        for user_id in input_dict['users']:
+            new_user = User.create_from_dict(user_id, input_dict['users'][user_id])
+            new_user_list.append(new_user)
+
+        user_list = input_dict['chain']
+        ordered_user_list: list[User] = []
+        for user_id in user_list:
+            ordered_user_list.append(new_user_list[new_user_list.index(user_id)])
+
+        new_chain.users = ordered_user_list
+
+        return new_chain
