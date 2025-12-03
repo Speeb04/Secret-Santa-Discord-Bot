@@ -154,7 +154,7 @@ async def participants(inter: discord.Interaction):
     for gifter in shuffled_gifters_list:
         response += f"- *{gifter.name}* <@{gifter.id}>\n"
 
-    await inter.response.send_message(response, silent=True)
+    await inter.response.send_message(response, ephemeral=True, silent=True)
 
     
 @tree.command(name="commands", description="See all commands")
