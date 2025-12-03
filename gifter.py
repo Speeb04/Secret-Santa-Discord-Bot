@@ -3,28 +3,34 @@ from __future__ import annotations
 from typing import override
 
 
-class User:
+class Gifter:
     """
-    Represents a user for Secret Santa.
+    Represents a gifter for Secret Santa.
     I'm not writing the docstring - you can figure it out.
     """
 
-    def __init__(self, user_id: int):
+    def __init__(self, gifter_id: int):
 
         # General setup
-        self.id = user_id
+        self.id = gifter_id
         self.name = None
         self.interests = None
         self.dislikes = None
 
         # Secret Santa purposes
-        self.send_to: User = None
-        self.receive_from: User = None
+        self.send_to: Gifter = None
+        self.receive_from: Gifter = None
 
     @override
-    def __eq__(self, other: User):
-        """Compares user_id of User"""
-        return self.id == other.id
+    def __eq__(self, other: Gifter | int | str):
+        """Compares gifter_id of gifter"""
+        if isinstance(other, Gifter):
+            return self.id == other.id
+        if isinstance(other, int):
+            return self.id == other
+        if isinstance(other, str):
+            return str(self.id) == other
+        return False
 
     def introduction(self, name: str, interests: str = None, dislikes: str = None) -> None:
         """Note: if you have no interests, you are boring as hell."""
@@ -32,7 +38,7 @@ class User:
         self.interests = interests
         self.dislikes = dislikes
 
-    def assign(self, send_to: User, receive_from: User) -> tuple[User, User] | int:
+    def assign(self, send_to: Gifter, receive_from: Gifter) -> tuple[Gifter, Gifter] | int:
         """Assign someone to send a gift to, and one to receive a gift from.
         Note that if either parameter is None or empty, it will throw an IOError.
 
@@ -63,13 +69,11 @@ class User:
         return previous_send_to, previous_receive_from
 
     @staticmethod
-    def create_from_dict(user_id: int, input_dict: dict) -> User:
-        """Create a User from a dictionary."""
-        new_user = User(user_id)
-        new_user.name = input_dict['name']
-        new_user.interests = input_dict['interests']
-        new_user.dislikes = input_dict['dislikes']
-        new_user.send_to = input_dict['send_to']
-        new_user.receive_from = input_dict['receive_from']
+    def create_from_dict(gifter_id: int, input_dict: dict) -> Gifter:
+        """Create a gifter from a dictionary."""
+        new_gifter = Gifter(gifter_id)
+        new_gifter.name = input_dict['name']
+        new_gifter.interests = input_dict['interests']
+        new_gifter.dislikes = input_dict['dislikes']
 
-        return new_user
+        return new_gifter
