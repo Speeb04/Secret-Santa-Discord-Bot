@@ -157,7 +157,12 @@ async def participants(inter: discord.Interaction):
 
     await inter.response.send_message(response, ephemeral=True, silent=True)
 
-    
+
+@tree.commands(name="random", description="Get a random gifter.")
+async def random(inter: discord.Interaction):
+    await inter.response.send_message(gifting_chain.get_random_gifter(), ephemeral=True)
+
+
 @tree.command(name="commands", description="See all commands")
 async def commands(inter: discord.Interaction):
     response = """

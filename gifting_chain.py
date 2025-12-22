@@ -3,6 +3,7 @@ from __future__ import annotations
 from random import shuffle
 from random import randint
 from typing import override
+from random import choice
 
 from gifter import Gifter
 
@@ -162,3 +163,6 @@ class GiftChain:
                 gifter.assign(send_to_gifter, receive_from_gifter)
 
         return new_chain
+
+    def get_random_gifter(self) -> Gifter:
+        return random.choice(self.gifters)
