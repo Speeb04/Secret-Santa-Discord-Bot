@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import override
 
 
 class Gifter:
@@ -21,7 +20,6 @@ class Gifter:
         self.send_to: Gifter = None
         self.receive_from: Gifter = None
 
-    @override
     def __eq__(self, other: Gifter | int | str):
         """Compares gifter_id of gifter"""
         if isinstance(other, Gifter):

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from random import shuffle
 from random import randint
-from typing import override
 from random import choice
 
 from gifter import Gifter
@@ -17,7 +16,6 @@ class GiftChain:
     gifters: list[Gifter] = []
     assigned = False
 
-    @override
     def __str__(self) -> str:
         """Hashed output for gifter output assignment chain"""
         return ' -> '.join(str(gifter.id) for gifter in self.gifters)
@@ -165,4 +163,4 @@ class GiftChain:
         return new_chain
 
     def get_random_gifter(self) -> Gifter:
-        return random.choice(self.gifters)
+        return choice(self.gifters)
